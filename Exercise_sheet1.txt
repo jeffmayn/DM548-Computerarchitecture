@@ -12,10 +12,10 @@ CPI (Cycle per instruction):
 CPI = SUM(n,i=0) (CPI_i * I_i) / I_c
 ((41 * 1 + 28 * 2 + 25 * 2 + 6 * 2) * 10^3 ) / ((41 + 28 + 25 + 6) * 10^3) = 1.59
 
+b)
 MIPS (millions of instructions per second):
 40 MHz = 40 * 10^6 = 40.000.000 Hertz
 
-b)
 MIPS = f / CPI * 10^6
 (40 * 10^6) / (1.59 * 10^6) = 25.15
 
@@ -103,4 +103,4 @@ is an overflow condition?
 
 answer: Yes when inputs differ from each other, the XOR gives
 1 as result, and therefore makes an overflow at MSB
-But of inputs are same, output will be 0 and no overflow will occur.
+But if inputs are same, output will be 0 and no overflow will occur.
