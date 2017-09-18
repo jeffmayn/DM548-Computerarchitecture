@@ -55,7 +55,7 @@ DECIMAL -28 to binary, TWO'S COMPLIMENT:
      64     +   16 + 8  + 4    +    1   = 93
 
 4.
-???
+By taking the compliment of all bits from LSB to MST, we have simply inverted all the bits.
 
 5.
 ???
