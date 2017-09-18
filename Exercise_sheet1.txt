@@ -7,7 +7,7 @@
 # I_c = instruction count
 # I_i = intruction count of type i
 
-svar 1:
+a)
 CPI (Cycle per instruction):
 CPI = SUM(n,i=0) (CPI_i * I_i) / I_c
 ((41 * 1 + 28 * 2 + 25 * 2 + 6 * 2) * 10^3 ) / ((41 + 28 + 25 + 6) * 10^3) = 1.59
@@ -15,11 +15,11 @@ CPI = SUM(n,i=0) (CPI_i * I_i) / I_c
 MIPS (millions of instructions per second):
 40 MHz = 40 * 10^6 = 40.000.000 Hertz
 
-svar 2:
+b)
 MIPS = f / CPI * 10^6
 (40 * 10^6) / (1.59 * 10^6) = 25.15
 
-svar 3:
+c)
 CPU = (100 * 10^3 * 1.59) / (40 * 10^3) = 3.975 seconds
 
 2.
