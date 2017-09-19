@@ -1,11 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package computerarchitecture;
 
 import arithmetics.Cpi_Mips_Cpu;
+import arithmetics.ConvertNumbers;
 import arithmetics.SystemPerformance;
 
 
@@ -15,17 +11,24 @@ import arithmetics.SystemPerformance;
  */
 public class Computerarchitecture {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-        
-       // Compare two functions nested forloops 
-       //SystemPerformance runSystemPerformance = new SystemPerformance();
-       //runSystemPerformance.run();
-       
-        Cpi_Mips_Cpu run = new Cpi_Mips_Cpu();
+
+
+       SystemPerformance runSystemPerformance = new SystemPerformance();
+       ConvertNumbers convert = new ConvertNumbers();
+       Cpi_Mips_Cpu run = new Cpi_Mips_Cpu();
+
+
+        // ALL PROGRAMS
+        //------------------------------------------------------
+
+        // Program 1. Compare two functions nested forloops:
+        runSystemPerformance.run();
+
+        // Program 2. Calculate CPI:
         run.calculateCPI(0);
+
+        // Program 3. Convert positive decimal to binary digits:
+        convert.decimalToBinary(24);
     }
-  
 }
