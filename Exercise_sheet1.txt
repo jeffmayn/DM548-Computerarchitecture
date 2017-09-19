@@ -48,11 +48,11 @@ DECIMAL -28 to binary, TWO'S COMPLIMENT:
 3.
 01100110 to DECIMAL
  0    1    1    0    0    1    1    0
-     64  + 32    +        4  + 2        = 120
+     64  + 32    +        4  + 2        = 120 // forkert.. svar er: -26
 
 01011101 to DECIMAL
  0    1    0    1    1    1    0    1
-     64     +   16 + 8  + 4    +    1   = 93
+     64     +   16 + 8  + 4    +    1   = 93 // også forkert
 
 4.
 By taking the compliment of all bits from LSB to MST, we have simply inverted all the bits.
