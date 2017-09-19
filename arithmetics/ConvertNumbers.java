@@ -1,13 +1,8 @@
 package arithmetics;
 
 public class ConvertNumbers {
-    public static void main(String[] args) {
 
-        // convert positive integers to binary digits:
-        decimalToBinary(21);
-    }
-
-    public static void decimalToBinary(int num){
+    public  void decimalToBinary(int num){
         System.out.println("Convert decimal '" + num + "' to binary digits:\n");
         System.out.printf("%-16s %3s %19s", "Division", "Quotient", "Remainder");
         System.out.println("\n---------------------------------------------");
