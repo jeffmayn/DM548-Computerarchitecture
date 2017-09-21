@@ -1,12 +1,14 @@
 .section .data
   hello:
     .string "Hello world!\n"
+  buffer:
+    .space 8
 
 .section .text
 .globl _start
 
 _start:
-
+/*
   # 1. Hello world
   mov $1, %rax
   mov $1, %rdi
@@ -17,7 +19,9 @@ _start:
   mov $60, %rax
   mov $0, %rdi
   syscall
+*/
 
+/*
   # 2. Use command line arguments:
   # this function is not generic, so if the argument is less than
   # register-size, you will get random bits from the memory
@@ -31,7 +35,9 @@ _start:
   mov $60, %rax
   mov $0, %rdi
   syscall
+*/
 
+/*
   # 2. Use command line arguments:
   # this time the function is generic, and only prints the argument.
   mov 16(%rsp), %r8
@@ -41,6 +47,59 @@ _start:
   mov $1, %rax
   mov $1, %rdi
   mov %r8,%rsi
+  syscall
+
+  mov $60, %rax
+  mov $0, %rdi
+  syscall
+*/
+
+/*
+  # 3. Read & Output:
+  #read string from stdin
+  mov $0, %rax
+  mov $0, %rdi
+  mov $buffer, %rsi
+  mov $8, %rdx
+  syscall
+
+  #write string to stdout
+  mov $1, %rax
+  mov $0, %rdi
+  mov $buffer,%rsi
+  mov $8, %rdx
+  syscall
+
+  mov $60, %rax
+  mov $0, %rdi
+  syscall
+*/
+
+  # 4. Read from file:
+  # get file from command line argument
+  mov 16(%rsp), %rcx
+
+  #open file
+  mov $2, %rax
+  mov %rcx, %rdi
+  mov $0, %rsi
+  mov $2, %rdx
+  syscall
+
+  mov %rax, %rcx
+
+  #read chars from file
+  mov $0, %rax
+  mov %rcx, %rdi
+  mov $buffer, %rsi
+  mov $20, %rdx
+  syscall
+
+  # write string to stdout
+  mov $1, %rax
+  mov $0, %rdi
+  mov $buffer,%rsi
+  mov $20, %rdx
   syscall
 
   mov $60, %rax
