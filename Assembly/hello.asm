@@ -3,6 +3,7 @@ hello: .ascii "Hello"
 
 .section .text
 .globl _start
+
 _start:
 
         mov $1, %rax
