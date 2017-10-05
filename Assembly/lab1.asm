@@ -7,6 +7,7 @@ _start:
 
 
   # Assignment solutions here
+  
 # 1. Output
 mov $42,%rax # moves constant 42 into register rax
 
