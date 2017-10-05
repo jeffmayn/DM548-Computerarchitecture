@@ -22,6 +22,7 @@ _start:
 */
 
 /*
+
   # 2. Use command line arguments:
   # this function is not generic, so if the argument is less than
   # register-size, you will get random bits from the memory
