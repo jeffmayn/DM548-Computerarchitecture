@@ -1,6 +1,6 @@
 .section .data
 guess:
-	.string "Guess a number between 0 /and 100\nType your guess:\n"
+	.string "Guess a number between 0 \and 100\nType your guess:\n"
 answerOver:
 	.string "you guessed too high\n"
 answerLow:
