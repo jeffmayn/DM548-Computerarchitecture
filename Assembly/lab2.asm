@@ -54,7 +54,7 @@ _start:
   syscall
 */
 
-/*
+
   # 3. Read & Output:
   #read string from stdin
   mov $0, %rax
@@ -73,8 +73,9 @@ _start:
   mov $60, %rax
   mov $0, %rdi
   syscall
-*/
 
+
+/*
   # 4. Read from file:
   # get file from command line argument
   mov 16(%rsp), %rcx
@@ -101,7 +102,8 @@ _start:
   mov $buffer,%rsi
   mov $20, %rdx
   syscall
-
+*/
+  # exit
   mov $60, %rax
   mov $0, %rdi
   syscall

@@ -6,21 +6,61 @@ _start:
 
 
 
-# Assignment solutions here
-
+  # Assignment solutions here
 # 1. Output
-mov $42, %rax                # moves constant 42 into register rax
+mov $42,%rax # moves constant 42 into register rax
 
 # 2. Looping
-mov $0, %rdx                 # move constant 0 to register rdx
-loop2:                       # label
-add %rax, %rdx               # add register rax to rdx
-sub $1, %rax                 # subtract 1 from register rax
-cmp $0, %rax                 # compare rax with 0
-jne loop2                    # jump if not equal
-mov $rdx, $rax               # else, move register rdx to rax
+mov $0,%rdx # move constant 0 to register rdx
+loop2: # label
+add %rax,%rdx # add register rax to rdx
+sub $1,%rax # subtract 1 from register rax
+cmp $0,%rax # compare rax with 0
+jne loop2 # jump if not equal
+mov %rdx,%rax # else, move register rdx to rax
 
 # 3. Multiplication
+mov $5,%rdx
+mov $-1,%rdx
+add %rax,%rdx
+loop3:
+  mov %rdx,%rdi
+  mul %rax
+  mov %rdi,%rdx
+  add $-1,%rdx
+  cmp $0,%rdx
+jne loop3
+
+# 4. More sums
+mov $20, %r8
+mov $3, %r9
+mov $5, %r10
+mov $0, %r11
+sum_loop:
+  mov $0, %rdx
+  mov $8, %rax
+  idiv %r9
+  cmp $0, %rdx
+  je add_number
+
+  mov $0, %rdx
+  mov %r8, %rax
+  idiv %r10
+  cmp $0, %rdx
+  jne end
+add_number:
+  add %r8, %r11
+end:
+  sub $1, %r8
+  cmp $0, %r8
+  jne sum_loop
+mov %r11, %rax
+call print_rax
+
+# 5. GDB
+
+
+
 
 
 

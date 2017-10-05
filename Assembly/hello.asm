@@ -1,9 +1,10 @@
 .section .data
-hello: .ascii "Hello World!\n"
+hello: .ascii "Hello"
 
 .section .text
 .globl _start
 _start:
+
         mov $1, %rax
         mov $1, %rdi
         mov $hello,%rsi
