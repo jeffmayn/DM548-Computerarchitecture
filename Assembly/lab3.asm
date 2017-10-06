@@ -1,6 +1,6 @@
 .section .data
 guess:
-	.string "Guess a number between 0 \and 100\nType your guess:\n"
+	.string "Guess a number between 0 & 100\nType your guess:\n"
 answerOver:
 	.string "you guessed too high\n"
 answerLow:
@@ -22,7 +22,7 @@ _start:
 mov $1, %rax
 mov $1, %rdi
 mov $guess,%rsi
-mov $52,%rdx
+mov $49,%rdx
 syscall
 
 # read string from stdin
