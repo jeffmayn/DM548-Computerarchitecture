@@ -74,6 +74,7 @@ jle skip                      # switch 2 numbers or move on in the array to next
 mov -16(%r8, %rsi, 8), %r10   # second number on the list
 mov %r10, -8(%r8, %rsi, 8)    # swaps the two lines
 mov %r9, -16(%r8, %rsi, 8)
+
 skip:
 dec %rsi                      # decrements on the array, move to next number
 cmp %rcx, %rsi                # the inner_loop runs for each unsorted number
