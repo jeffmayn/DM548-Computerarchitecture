@@ -42,7 +42,7 @@ push %r13                     # pusher pointer of raw data
 call get_number_count
 push %rax
 
-######## parse number and allocate memory #######
+######## allocate memory and parse number #######
 imul $8, %rax                 # multiply rax by 8, every nr fills 8 bite on number
 push %rax
 call alloc_mem                # allocate memory for the second buffer
