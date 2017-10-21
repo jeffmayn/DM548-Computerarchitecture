@@ -9,10 +9,9 @@
   .globl _start
 
 _start:
-mov 16(%rsp), %rcx
+mov 16(%rsp), %rcx        # read from command-line argument
 
 ####### open file #######
-
 mov $2, %rax
 mov %rcx, %rdi
 mov $0, %rsi
@@ -20,13 +19,11 @@ mov $0, %rdx
 syscall # fd in %rax
 
 ####### lets get filesize #######
-
 mov %rax, %r15           	 # file descriptor
 push %rax                	 # push register rax to stack
 call get_file_size       	 # call get_file_size and save in register rax
 
 ####### allocate memory #######
-
 push %rax
 mov %rax, %r14 # file size
 call alloc_mem # memory location
@@ -48,7 +45,6 @@ call get_number_count
 push %rax
 
 ######## parse number buffer #######
-
 imul $8, %rax         		# multiply rax by 8, every nr fills 8 bite on number
 push %rax
 call alloc_mem       		 # allocate memory for the second buffer
@@ -66,7 +62,6 @@ pop %r12              		 # remove unused value from memory allocation above
 pop %r12             		 # place numbercount in r12
 
 ######## Bobble sort #######
-
 mov $1, %rcx          		 # the first number in the list
 mov $0, %rax         		 # this is to cmp counter #(SKAL IKKE I FÆRDIG KODE)
 
@@ -92,7 +87,6 @@ jg outer_loop
 call print_rax               # (SKAL IKKE I FÆRDIG KODE)
 
 ######## print number #######
-
 mov $0, %rcx        		 # initilise counter by starting it with 0
 
 print_loop2:      		     # loop to counter
@@ -108,7 +102,7 @@ mov $3, %rax        		 # closes the file that we open at the start.
 mov $3, %rdi
 syscall
 
-# Syscall calling sys_exit
+###### Exit #######
 mov $60, %rax
 mov $0, %rdi
 syscall
