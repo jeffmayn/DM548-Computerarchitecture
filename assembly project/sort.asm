@@ -1,132 +1,114 @@
+.include "file_handling.asm"
+.include "alloc.asm"
+.include "print_rax.asm"
+.include "parsing.asm"
+.include "print.asm"
+
 .section .data
-buffer:
-  .space 1024
-file_stat:
-	.space 144	#Size of the fstat struct
 .section .text
   .globl _start
 
 _start:
-  mov 16(%rsp), %rcx
+mov 16(%rsp), %rcx
 
-# open file
-  mov $2, %rax
-  mov %rcx, %rdi
-  mov $0, %rsi
-  mov $2, %rdx
-  syscall
+####### open file #######
 
-# lets get filesize
-  push %rax                 # push register rax to stack
-  call get_file_size        # call get_file_size and save in register rax
-  call print_rax
+mov $2, %rax
+mov %rcx, %rdi
+mov $0, %rsi
+mov $0, %rdx
+syscall # fd in %rax
 
-# allecate memory
-  call alloc_mem
-  call print_rax
+####### lets get filesize #######
+
+mov %rax, %r15           	 # file descriptor
+push %rax                	 # push register rax to stack
+call get_file_size       	 # call get_file_size and save in register rax
+
+####### allocate memory #######
+
+push %rax
+mov %rax, %r14 # file size
+call alloc_mem # memory location
+
+mov %rax, %r13 # memory location
+
+/* Syscall: read n chars from file */
+mov $0, %rax
+mov %r15, %rdi 				# %rcx is file descriptor for our file
+mov %r13, %rsi		  		# we want to save string in "buffer"
+mov %r14, %rdx				# number of bytes we want to read (8 characters)
+syscall
+
+####### get number count #######
+
+push %r14           		# pusher filesize on stack
+push %r13             		# pusher pointer of raw data
+call get_number_count
+push %rax
+
+######## parse number buffer #######
+
+imul $8, %rax         		# multiply rax by 8, every nr fills 8 bite on number
+push %rax
+call alloc_mem       		 # allocate memory for the second buffer
+mov %rax, %r8        		 # to store in a buffer %r8
+
+push %r8             		 # pointer number array
+push %r14            		 # filesize
+push %r13            		 # pointer raw data
+
+call parse_number_buffer
+pop %r13            		 # remove pointer of raw data from stack
+pop %r14             		 # remove filesize of raw data from stack
+pop %r8              		 # remove pointer for number array
+pop %r12              		 # remove unused value from memory allocation above
+pop %r12             		 # place numbercount in r12
+
+######## Bobble sort #######
+
+mov $1, %rcx          		 # the first number in the list
+mov $0, %rax         		 # this is to cmp counter #(SKAL IKKE I FÆRDIG KODE)
+
+outer_loop:
+mov %r12, %rsi      		 # the size of the array size of list
+
+inner_loop:
+mov -8(%r8, %rsi, 8), %r9    # 8 bytes back, first number put in the list
+inc %rax                     # (SKAL IKKE I FÆRDIG KODE)
+cmp %r9, -16(%r8, %rsi, 8)   # compairs number by its predesessor
+jle skip                     # switch 2 numbers or move on in the array to next 2 numbers
+mov -16(%r8, %rsi, 8), %r10  # second number on the list
+mov %r10, -8(%r8, %rsi, 8)   # swaps the two lines
+mov %r9, -16(%r8, %rsi, 8)
+skip:
+dec %rsi                     # decrements on the array, move to next number
+cmp %rcx, %rsi               # the inner_loop runs for each unsorted number
+jne inner_loop
+inc %rcx                     #
+cmp %rcx, %r12
+jg outer_loop
+
+call print_rax               # (SKAL IKKE I FÆRDIG KODE)
+
+######## print number #######
+
+mov $0, %rcx        		 # initilise counter by starting it with 0
+
+print_loop2:      		     # loop to counter
+push (%r8, %rcx, 8)  		 # take number from array and push on the stack.
+
+call print_number   		 # print number current counter index (rcx)
+inc %rcx             		 # incrementing counter by 1
+cmp %rcx, %r12     			 # have we reached the last number (the end!)
+jne print_loop2
+
+###### Close file #######
+mov $3, %rax        		 # closes the file that we open at the start.
+mov $3, %rdi
+syscall
 
 # Syscall calling sys_exit
-  mov $60, %rax
-  mov $0, %rdi
-  syscall
-
-
-
-
-  # get file size-function
-   .type get_file_size, @function
-  get_file_size:
-  	push 	%rbp
-  	mov 	%rsp,%rbp 		#Function Prolog
-
-  	#Get File Size
-  	mov		$5,%rax			#Syscall fstat
-  	mov		16(%rbp),%rdi	#File Handler
-  	mov		$file_stat,%rsi	#Reserved space for the stat struct
-  	syscall
-  	mov		$file_stat, %rbx
-  	mov		48(%rbx),%rax	#Position of size in the struct
-
-  	mov		%rbp,%rsp		#Function Epilog
-  	pop 	%rbp
-  	ret
-
-    .type print_rax, @function
-    print_rax:
-      /* Prints the contents of rax. */
-
-      push  %rbp
-      mov   %rsp, %rbp        # function prolog
-
-      push  %rax              # saving the registers on the stack
-      push  %rcx
-      push  %rdx
-      push  %rdi
-      push  %rsi
-      push  %r9
-
-      mov   $6, %r9           # we always print the 6 characters "RAX: \n"
-      push  $10               # put '\n' on the stack
-
-      loop1:
-      mov   $0, %rdx
-      mov   $10, %rcx
-      idiv  %rcx              # idiv alwas divides rdx:rax/operand
-                              # result is in rax, remainder in rdx
-      add   $48, %rdx         # add 48 to remainder to get corresponding ASCII
-      push  %rdx              # save our first ASCII sign on the stack
-      inc   %r9               # counter
-      cmp   $0, %rax
-      jne   loop1             # loop until rax = 0
-
-      mov   $0x20, %rax       # ' '
-      push  %rax
-      mov   $0x3a, %rax       # ':'
-      push  %rax
-      mov   $0x58, %rax       # 'X'
-      push  %rax
-      mov   $0x41, %rax       # 'A"
-      push  %rax
-      mov   $0x52, %rax       # 'R'
-      push  %rax
-
-      print_loop:
-      mov   $1, %rax          # Here we make a syscall. 1 in rax designates a sys_write
-      mov   $1, %rdi          # rdx: int file descriptor (1 is stdout)
-      mov   %rsp, %rsi        # rsi: char* buffer (rsp points to the current char to write)
-      mov   $1, %rdx          # rdx: size_t count (we write one char at a time)
-      syscall                 # instruction making the syscall
-      add   $8, %rsp          # set stack pointer to next char
-      dec   %r9
-      jne   print_loop
-
-      pop   %r9               # restoring the registers
-      pop   %rsi
-      pop   %rdi
-      pop   %rdx
-      pop   %rcx
-      pop   %rax
-
-      mov   %rbp, %rsp        # function Epilog
-      pop   %rbp
-      ret
-
-      .type alloc_mem, @function
-      alloc_mem:
-      	push 	%rbp
-      	mov 	%rsp,%rbp 		#Function Prolog
-
-      	#First, we need to retrieve the current end of our heap
-      	mov		$0,%rdi
-      	mov		$12,%rax
-      	syscall					#The current end is in %rax
-      	push	%rax			#We have to save this, this will be the beginning of the cleared field
-      	add		16(%rbp),%rax	#Now we add the desired additional space on top of the current end of our heap
-      	mov		%rax,%rdi
-      	mov		$12,%rax
-      	syscall
-
-      	pop		%rax
-      	mov		%rbp,%rsp		#Function Epilog
-      	pop 	%rbp
-      	ret
+mov $60, %rax
+mov $0, %rdi
+syscall
