@@ -30,7 +30,7 @@ call alloc_mem # memory location
 
 mov %rax, %r13 # memory location
 
-/* Syscall: read n chars from file */
+####### read chars from file #######
 mov $0, %rax
 mov %r15, %rdi                # %rcx is file descriptor for our file
 mov %r13, %rsi                # we want to save string in "buffer"
