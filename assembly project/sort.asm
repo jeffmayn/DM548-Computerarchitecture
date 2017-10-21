@@ -38,7 +38,6 @@ mov %r14, %rdx				# number of bytes we want to read (8 characters)
 syscall
 
 ####### get number count #######
-
 push %r14           		# pusher filesize on stack
 push %r13             		# pusher pointer of raw data
 call get_number_count
