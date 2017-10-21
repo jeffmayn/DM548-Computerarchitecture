@@ -9,7 +9,7 @@
   .globl _start
 
 _start:
-mov 16(%rsp), %rcx        # read from command-line argument
+mov 16(%rsp), %rcx           # read from command-line argument
 
 ####### open file #######
 mov $2, %rax
@@ -19,9 +19,9 @@ mov $0, %rdx
 syscall # fd in %rax
 
 ####### lets get filesize #######
-mov %rax, %r15           	 # file descriptor
-push %rax                	 # push register rax to stack
-call get_file_size       	 # call get_file_size and save in register rax
+mov %rax, %r15           	   # file descriptor
+push %rax                	   # push register rax to stack
+call get_file_size       	   # call get_file_size and save in register rax
 
 ####### allocate memory #######
 push %rax
@@ -32,40 +32,40 @@ mov %rax, %r13 # memory location
 
 /* Syscall: read n chars from file */
 mov $0, %rax
-mov %r15, %rdi 				# %rcx is file descriptor for our file
-mov %r13, %rsi		  		# we want to save string in "buffer"
-mov %r14, %rdx				# number of bytes we want to read (8 characters)
+mov %r15, %rdi 				       # %rcx is file descriptor for our file
+mov %r13, %rsi		  	       # we want to save string in "buffer"
+mov %r14, %rdx			         # number of bytes we want to read (8 characters)
 syscall
 
 ####### get number count #######
-push %r14           		# pusher filesize on stack
-push %r13             		# pusher pointer of raw data
+push %r14           	  	   # pusher filesize on stack
+push %r13             		   # pusher pointer of raw data
 call get_number_count
 push %rax
 
 ######## parse number buffer #######
-imul $8, %rax         		# multiply rax by 8, every nr fills 8 bite on number
+imul $8, %rax         		   # multiply rax by 8, every nr fills 8 bite on number
 push %rax
-call alloc_mem       		 # allocate memory for the second buffer
-mov %rax, %r8        		 # to store in a buffer %r8
+call alloc_mem        		   # allocate memory for the second buffer
+mov %rax, %r8        		     # to store in a buffer %r8
 
-push %r8             		 # pointer number array
-push %r14            		 # filesize
-push %r13            		 # pointer raw data
+push %r8             		     # pointer number array
+push %r14            		     # filesize
+push %r13            	       # pointer raw data
 
 call parse_number_buffer
-pop %r13            		 # remove pointer of raw data from stack
-pop %r14             		 # remove filesize of raw data from stack
-pop %r8              		 # remove pointer for number array
-pop %r12              		 # remove unused value from memory allocation above
-pop %r12             		 # place numbercount in r12
+pop %r13            	       # remove pointer of raw data from stack
+pop %r14                     # remove filesize of raw data from stack
+pop %r8              		     # remove pointer for number array
+pop %r12              		   # remove unused value from memory allocation above
+pop %r12             		     # place numbercount in r12
 
-######## Bobble sort #######
-mov $1, %rcx          		 # the first number in the list
-mov $0, %rax         		 # this is to cmp counter #(SKAL IKKE I FÆRDIG KODE)
+######## Bubble sort #######
+mov $1, %rcx          		   # the first number in the list
+mov $0, %rax         		     # this is to cmp counter #(SKAL IKKE I FÆRDIG KODE)
 
 outer_loop:
-mov %r12, %rsi      		 # the size of the array size of list
+mov %r12, %rsi               # the size of the array size of list
 
 inner_loop:
 mov -8(%r8, %rsi, 8), %r9    # 8 bytes back, first number put in the list
@@ -86,18 +86,18 @@ jg outer_loop
 call print_rax               # (SKAL IKKE I FÆRDIG KODE)
 
 ######## print number #######
-mov $0, %rcx        		 # initilise counter by starting it with 0
+mov $0, %rcx        		     # initilise counter by starting it with 0
 
-print_loop2:      		     # loop to counter
-push (%r8, %rcx, 8)  		 # take number from array and push on the stack.
+print_loop2:      		       # loop to counter
+push (%r8, %rcx, 8)  		     # take number from array and push on the stack.
 
-call print_number   		 # print number current counter index (rcx)
-inc %rcx             		 # incrementing counter by 1
-cmp %rcx, %r12     			 # have we reached the last number (the end!)
+call print_number   		     # print number current counter index (rcx)
+inc %rcx             		     # incrementing counter by 1
+cmp %rcx, %r12     			     # have we reached the last number (the end!)
 jne print_loop2
 
 ###### Close file #######
-mov $3, %rax        		 # closes the file that we open at the start.
+mov $3, %rax        		     # closes the file that we open at the start.
 mov $3, %rdi
 syscall
 
