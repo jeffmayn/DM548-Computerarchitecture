@@ -25,10 +25,9 @@ call get_file_size            # call get_file_size and save in register rax
 
 ####### allocate memory #######
 push %rax
-mov %rax, %r14 # file size
-call alloc_mem # memory location
-
-mov %rax, %r13 # memory location
+mov %rax, %r14                # file size
+call alloc_mem                # memory location
+mov %rax, %r13                # memory location
 
 ####### read chars from file #######
 mov $0, %rax
