@@ -1,4 +1,4 @@
-Phillip Emil Kramer
+Philip Emil Kramer
 Anton Nørgaard
 Vilmundur Porsteinsson
 Karol Zdunek
