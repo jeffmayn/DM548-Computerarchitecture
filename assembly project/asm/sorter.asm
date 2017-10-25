@@ -11,7 +11,7 @@
 _start:
 mov 16(%rsp), %rcx            # read filename from command-line argument.
 
-####### open file #######
+####### open file ##############
 mov $2, %rax
 mov %rcx, %rdi
 mov $0, %rsi
@@ -23,7 +23,7 @@ mov %rax, %r15                # cp file descriptor to r15 for later use.
 push %rax                     # push file descripter to stack (so 'get_file_size read' can read it).
 call get_file_size            # Returns file-size in rax.
 
-####### allocate memory #######
+####### allocate memory ########
 push %rax                     # push file-size to stack (so 'alloc_mem' can read it).
 mov %rax, %r14                # cp file-size to r14 for later use.
 call alloc_mem                # Returns address of allocated memory for first buffer, to rax.
@@ -36,7 +36,7 @@ mov %r13, %rsi                # we want to save string in "buffer".
 mov %r14, %rdx                # number of bytes we want to read.
 syscall
 
-####### get number count #######
+####### get number count #########
 push %r14                     # push file-size on stack (so 'get_number_count' can read it).
 push %r13                     # push the address of the raw data in memory to stack (so 'get_number_count' can read it).
 call get_number_count         # Returns number count for the file, to rax.
