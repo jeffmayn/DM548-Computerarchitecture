@@ -74,7 +74,7 @@ mov %r12, %rsi                # cp number count to rsi (n = number count or 'arr
 inner_loop:                   # the nested for-loop.
 mov -8(%r8, %rsi, 8), %r9     # we cp our first number at offset -8 in the stack, at the address of our second buffer (r8) into r9,
 cmp %r9, -16(%r8, %rsi, 8)    # then we compare this number by its predesessor.
-jle skip                      # if the number is less or equal to its predesessor, we jump to skip,
+jle skip                      # if the number is less or equal to its predesessor, we skip it (jump to skip),
 mov -16(%r8, %rsi, 8), %r10   # else we swap the two numbers.
 mov %r10, -8(%r8, %rsi, 8)
 mov %r9, -16(%r8, %rsi, 8)
