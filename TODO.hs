@@ -37,8 +37,8 @@ søndag  17.12		: lav på computerspil + lav på prolog projekt
 mandag  18.12		: lav på computerspil + lav på prolog projekt
 tirsdag 19.12		: lav på computerspil + lav på prolog projekt
 onsdag  20.12		: lav på computerspil + lav på prolog projekt
-torsdag 21.12		: lav på computerspil + lav på prolog projekt
-fredag  22.12		: deadline computerspilsprojekt
+torsdag 21.12		: lav på computerspil + `aflever prolog projekt`
+fredag  22.12		: `deadline computerspilsprojekt`
 lørdag  23.12		: pausedag
 søndag  24.12		: juleaften
 mandag  25.12		: første juledag
@@ -53,9 +53,9 @@ mandag  01.01		: øv alle emner i computerspil
 tirsdag 02.01		: øv alle emner i computerspil
 onsdag  03.01		: øv alle emner i computerspil
 torsdag 04.01		: øv alle emner i computerspil
-fredag  05.01		: mundtlig eksamen i computerspil
+fredag  05.01		: `mundtlig eksamen i computerspil`
 lørdag  06.01		: lav C-projekt
-søndag  07.01		: afslut C-projekt
+søndag  07.01		: `afslut C-projekt`
 mandag  08.01		: deadline prolog-projekt + løs eksamensæt jan09
 tirsdag 09.01		: løs eksamensæt nov06 + læs exercises: Computer Arithmetic
 onsdag  10.01		: løs eksamensæt okt07 + læs exercises: Computer Arithmetic & Boolean Algebra
@@ -71,6 +71,6 @@ fredag  20.01		: Løs tilfældig eksamensæt med hjælp fra java program
 lørdag  21.01		: Løs tilfældig eksamensæt med hjælp fra java program
 søndag  22.01		: Løs tilfældig eksamensæt med hjælp fra java program
 mandag  23.01		: Løs tilfældig eksamensæt med hjælp fra java program
-tirsdag 24.01		: skriftlig eksamen i computerarkitektur
+tirsdag 24.01		: `skriftlig eksamen i computerarkitektur`
 onsdag  25.01		: FEST!
 
